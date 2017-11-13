@@ -2,24 +2,26 @@
 
 exports[`should generate snapshot for 1 expense 1`] = `
 <div>
-  <p>
+  <h3>
     Viewing 
+    1
      
-    expenses
+    expense
      totalling 
-    $0.00
-  </p>
+    $2.35
+  </h3>
 </div>
 `;
 
 exports[`should generate snapshot for multiple expenses 1`] = `
 <div>
-  <p>
+  <h3>
     Viewing 
+    23
      
     expenses
      totalling 
-    $0.00
-  </p>
+    $2,544,784.25
+  </h3>
 </div>
 `;
