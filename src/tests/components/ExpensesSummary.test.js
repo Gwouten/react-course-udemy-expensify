@@ -13,7 +13,7 @@ test('should generate snapshot for 1 expense', () => {
 
 test('should generate snapshot for multiple expenses', () => {
   const wrapper = shallow(<ExpensesSummary
-    expenseCount={23} 
+    expenseCount={23}
     expensesTotal={254478425}
   />);
   expect(wrapper).toMatchSnapshot();
