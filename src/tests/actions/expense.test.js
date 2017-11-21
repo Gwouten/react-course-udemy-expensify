@@ -7,7 +7,8 @@ import {
   editExpense,
   setExpenses,
   startSetExpenses,
-  startRemoveExpense } from '../../actions/expenses.js';
+  startRemoveExpense,
+  startEditExpense } from '../../actions/expenses.js';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -21,16 +22,6 @@ beforeEach((done) => {
 
   database.ref('expenses').set(expensesData).then(() => done());
 });
-
-test('should set up editExpense action object', () => {
-  const action = editExpense('123abc', { note: 'New note value' });
-  expect(action).toEqual({
-    type: 'EDIT_EXPENSE',
-    id: '123abc',
-    updates: { note: 'New note value'}
-  });
-});
-
 
 test('should setup addExpense action object with provided values', () => {
   const action = addExpense(expenses[2]);
@@ -130,9 +121,38 @@ test('should remove expenses from Firebase', (done) => {
       type: 'REMOVE_EXPENSE',
       id
     });
-    return database.ref(`expenses/${id}`).once('value');
-  }).then((snaphsot) => {
-    expect(snapshot.val()).toBeFalsy();
   });
-  done();
+  return database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+    expect(snapshot.val()).toBeFalsy();
+    done();
+  });
+});
+
+test('should set up editExpense action object', () => {
+  const action = editExpense('123abc', { note: 'New note value' });
+  expect(action).toEqual({
+    type: 'EDIT_EXPENSE',
+    id: '123abc',
+    updates: { note: 'New note value'}
+  });
+});
+
+test('should edit expense from Firebase', (done) => {
+  const store = createMockStore({});
+  const id = expenses[0].id;
+  const updates = {
+    description: 'edit description',
+  };
+  store.dispatch(startEditExpense(id, updates)).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'EDIT_EXPENSE',
+      id,
+      updates
+    });
+    return database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+        expect(snapshot.val().description).toBe(updates.description);
+        done();
+      });
+  });
 });
