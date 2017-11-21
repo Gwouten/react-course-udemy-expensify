@@ -22,7 +22,7 @@ const addExpense = (
 // REMOVE_EXPENSE
 const removeExpense = ({ id } = {}) => ({
   type: 'REMOVE_EXPENSE',
-  expenseId: id
+  : id
 });
 
 // EDIT_EXPENSE
@@ -70,7 +70,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         action.expense
       ];
       case 'REMOVE_EXPENSE':
-      return state.filter(({ id }) => id !== action.expenseId);
+      return state.filter(({ id }) => id !== action.);
       case 'EDIT_EXPENSE':
       return state.map((expense)=>{
         if(expense.id === action.id) {

@@ -25,7 +25,7 @@ test('should set addExpense', () => {
 test('should remove expense by id', () => {
   const action = {
     type: 'REMOVE_EXPENSE',
-    expenseId: expenses[1].id
+    id: expenses[1].id
   };
   const state = expensesReducer(expenses, action);
   expect(state).toEqual([ expenses[0], expenses[2] ]);
@@ -34,7 +34,7 @@ test('should remove expense by id', () => {
 test('should not remove any if no id provided', () => {
   const action = {
     type: 'REMOVE_EXPENSE',
-    expenseId: '-1'
+    id: '-1'
   };
   const state = expensesReducer(expenses, action);
   expect(state).toEqual(expenses);
