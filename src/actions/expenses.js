@@ -1,5 +1,4 @@
 import uuid from 'uuid';
-import thunk from 'redux-thunk';
 import database from '../firebase/firebase';
 
 
@@ -43,7 +42,7 @@ export const startRemoveExpense = ({ id } = {}) => {
     });
   };
 };
- 
+
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
   type: 'EDIT_EXPENSE',
@@ -69,7 +68,6 @@ export const setExpenses = (expenses) => ({
 export const startSetExpenses = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid.uid;
-    console.log(uid);
     return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
       const expenses = [];
 
